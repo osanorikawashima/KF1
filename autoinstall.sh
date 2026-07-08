@@ -4,10 +4,16 @@
 #echo steam steam/question select "I AGREE" | sudo debconf-set-selections
 #echo steam steam/license note '' | sudo debconf-set-selections
 
-# 2. Cập nhật hệ thống và cài đặt
+# Thiết lập biến
+USER_HOME="/home/ubuntu"
+GAME_DIR="$USER_HOME/kfserver"
+STEAM_CMD="/usr/games/steamcmd"
+
+# 1. Cài đặt các gói cần thiết
+export NEEDRESTART_MODE=a
 sudo add-apt-repository multiverse -y
 sudo dpkg --add-architecture i386
-sudo NEEDRESTART_MODE=a apt update -y
+sudo apt update -y
 sudo apt install -y steamcmd
 
 # 3. Tải Server Killing Floor
