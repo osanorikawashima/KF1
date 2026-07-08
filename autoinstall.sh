@@ -5,8 +5,7 @@ echo steam steam/question select "I AGREE" | sudo debconf-set-selections
 echo steam steam/license note '' | sudo debconf-set-selections
 
 # Thiết lập biến
-USER_HOME="/home/ubuntu"
-GAME_DIR="$USER_HOME/kfserver"
+GAME_DIR="/home/ubuntu/kfserver"
 STEAM_CMD="/usr/games/steamcmd"
 
 # 1. Cài đặt các gói cần thiết
@@ -15,19 +14,20 @@ sudo dpkg --add-architecture i386
 sudo NEEDRESTART_MODE=a apt update -y
 sudo NEEDRESTART_MODE=a apt install -y steamcmd
 
+mkdir -p "$GAME_DIR"
+chown -R ubuntu:ubuntu "$GAME_DIR"
+
 # 3. Tải Server Killing Floor
-/usr/games/steamcmd +login nori0307 bestwish02 +app_update 215360 validate +quit
+sudo -u ubuntu $STEAM_CMD +force_install_dir "$GAME_DIR" +login nori0307 bestwish02 +app_update 215360 validate +quit
 
-# 4. Di chuyển vào thư mục game
-cd "$HOME/Steam/steamapps/common/Killing Floor Dedicated Server - Linux/System"
+cd "$GAME_DIR/System"
+if [ -f "steamclient.so" ]; then
+    sudo -u ubuntu mv steamclient.so steamclient.so.bak
+fi
+# Liên kết tới thư mục local của user ubuntu
+sudo -u ubuntu ln -s /home/ubuntu/.local/share/Steam/steamcmd/linux32/steamclient.so ./steamclient.so
 
-# 5. Xử lý lỗi thư viện steamclient.so
-# Đổi tên file bị hỏng để sao lưu
-mv steamclient.so steamclient.so.bak 
-
-# Tạo symbolic link đến phiên bản SteamCMD đang hoạt động
-ln -s ~/.local/share/Steam/steamcmd/linux32/steamclient.so ./steamclient.so
-
+cd "$GAME_DIR/System"
 cat << 'EOF' > "$HOME/Steam/steamapps/common/Killing Floor Dedicated Server - Linux/System/KillingFloor.ini"
 Canvas=Engine.Canvas
 DetectedVideoMemory=0
@@ -1028,7 +1028,7 @@ Maps=KF-Menu
 MapNum=0
 EOF
 
-# 5. Tạo và kích hoạt Systemd Service để chạy server tự động
+# 5. Cấu hình dịch vụ Systemd để server tự chạy
 cat << 'EOF' | sudo tee /etc/systemd/system/kf-server.service
 [Unit]
 Description=Killing Floor Dedicated Server
@@ -1046,7 +1046,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-# Kích hoạt service
+# Kích hoạt dịch vụ
 systemctl daemon-reload
 systemctl enable kf-server
 systemctl start kf-server
