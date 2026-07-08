@@ -28,7 +28,7 @@ fi
 sudo -u ubuntu ln -s /home/ubuntu/.local/share/Steam/steamcmd/linux32/steamclient.so ./steamclient.so
 
 cd "$GAME_DIR/System"
-cat << 'EOF' > "$HOME/Steam/steamapps/common/Killing Floor Dedicated Server - Linux/System/KillingFloor.ini"
+cat << 'EOF' > "/home/ubuntu/kfserver/System/KillingFloor.ini"
 Canvas=Engine.Canvas
 DetectedVideoMemory=0
 ServerReadsStdin=False
