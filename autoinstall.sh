@@ -1028,22 +1028,25 @@ Maps=KF-Menu
 MapNum=0
 EOF
 
-cat << 'EOF' | sudo tee /etc/systemd/system/kf-server.service > /dev/null && \
-sudo systemctl daemon-reload && \
-sudo systemctl enable kf-server && \
-sudo systemctl start kf-server
+# 5. Tạo và kích hoạt Systemd Service để chạy server tự động
+cat << 'EOF' | sudo tee /etc/systemd/system/kf-server.service
 [Unit]
 Description=Killing Floor Dedicated Server
 After=network.target
 
 [Service]
 Type=simple
-User=root
-WorkingDirectory=/root/Steam/steamapps/common/Killing\ Floor\ Dedicated\ Server\ -\ Linux/System
-ExecStart=/root/Steam/steamapps/common/Killing\ Floor\ Dedicated\ Server\ -\ Linux/System/ucc-bin server KF-BioticsLab.rom?game=KFmod.KFGameType?VACSecured=true?MaxPlayers=6 -ini=KillingFloor.ini -nohomedir
+User=ubuntu
+WorkingDirectory=/home/ubuntu/kfserver/System
+ExecStart=/home/ubuntu/kfserver/System/ucc-bin server KF-BioticsLab.rom?game=KFmod.KFGameType?VACSecured=true?MaxPlayers=6 -ini=KillingFloor.ini -nohomedir
 Restart=always
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
 EOF
+
+# Kích hoạt service
+systemctl daemon-reload
+systemctl enable kf-server
+systemctl start kf-server
