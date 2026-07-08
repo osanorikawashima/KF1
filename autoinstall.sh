@@ -7,7 +7,7 @@ echo steam steam/license note '' | sudo debconf-set-selections
 # 2. Cập nhật hệ thống và cài đặt
 sudo add-apt-repository multiverse -y
 sudo dpkg --add-architecture i386
-sudo apt update -y
+sudo NEEDRESTART_MODE=a apt update -y
 sudo apt install -y steamcmd
 
 # 3. Tải Server Killing Floor
