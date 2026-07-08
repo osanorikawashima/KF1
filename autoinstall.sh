@@ -10,11 +10,10 @@ echo steam steam/license note '' | sudo debconf-set-selections
 #STEAM_CMD="/usr/games/steamcmd"
 
 # 1. Cài đặt các gói cần thiết
-export NEEDRESTART_MODE=a
 sudo add-apt-repository multiverse -y
 sudo dpkg --add-architecture i386
-sudo apt update -y
-sudo apt install -y steamcmd
+sudo NEEDRESTART_MODE=a apt update -y
+sudo NEEDRESTART_MODE=a apt install -y steamcmd
 
 # 3. Tải Server Killing Floor
 /usr/games/steamcmd +login nori0307 bestwish02 +app_update 215360 validate +quit
