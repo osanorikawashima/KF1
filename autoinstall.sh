@@ -11,7 +11,7 @@ sudo NEEDRESTART_MODE=a apt update -y
 sudo apt install -y steamcmd
 
 # 3. Tải Server Killing Floor
-steamcmd +login nori0307 bestwish02 +app_update 215360 validate +quit
+/usr/games/steamcmd +login nori0307 bestwish02 +app_update 215360 validate +quit
 
 # 4. Di chuyển vào thư mục game
 cd "$HOME/Steam/steamapps/common/Killing Floor Dedicated Server - Linux/System"
