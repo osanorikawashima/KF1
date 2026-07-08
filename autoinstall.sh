@@ -5,9 +5,9 @@
 #echo steam steam/license note '' | sudo debconf-set-selections
 
 # Thiết lập biến
-USER_HOME="/home/ubuntu"
-GAME_DIR="$USER_HOME/kfserver"
-STEAM_CMD="/usr/games/steamcmd"
+#USER_HOME="/home/ubuntu"
+#GAME_DIR="$USER_HOME/kfserver"
+#STEAM_CMD="/usr/games/steamcmd"
 
 # 1. Cài đặt các gói cần thiết
 export NEEDRESTART_MODE=a
