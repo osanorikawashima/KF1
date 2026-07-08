@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 1. Tự động chấp nhận điều khoản (EULA) của steamcmd để không bị treo script
-#echo steam steam/question select "I AGREE" | sudo debconf-set-selections
-#echo steam steam/license note '' | sudo debconf-set-selections
+echo steam steam/question select "I AGREE" | sudo debconf-set-selections
+echo steam steam/license note '' | sudo debconf-set-selections
 
 # Thiết lập biến
 #USER_HOME="/home/ubuntu"
